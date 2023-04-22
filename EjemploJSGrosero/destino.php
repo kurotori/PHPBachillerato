@@ -20,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Destino GROSERO para JavaScript desde PHP</title>
     <script>
+        
         // Abrimos un bloque php dentro de un bloque script para generar una variable para JS
         <?php
             echo("dato='" . $dato . "';"); 
