@@ -13,6 +13,10 @@
     $respuesta->estado = "OK";
     $respuesta->datos = $fechaHora;
 
+    /* 
     $json = TransformarEnJSON($respuesta);
-    MostrarJSON($json);
+    MostrarJSON($json); 
+    */
+
+    respuestaJSON($respuesta);
 ?>

@@ -83,4 +83,14 @@
     
     }
 
+    
+    /**
+     * Combina las dos funciones TransformarEnJSON y MostrarJSON en una sola
+     * @param mixed $objeto El objeto con la respuesta que se quiere enviar como JSON
+     */
+    function respuestaJSON($objeto){
+        $datosRespuesta=TransformarEnJSON($objeto);
+        MostrarJSON($datosRespuesta);
+    }
+
  ?>
