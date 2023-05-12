@@ -52,11 +52,6 @@
             $this->estado="CERRADA";
         }
 
-
-        public function buscarDatos(){
-            
-        }
-
     }
 
 ?>

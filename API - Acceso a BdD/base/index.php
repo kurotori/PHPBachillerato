@@ -9,35 +9,15 @@
         public $datos;
     }
 
-    /**
-     * Clase para contener los datos de la fecha del sistema
-     */
-    class Fecha{
-        public $dia;
-        public $mes;
-        public $anio;
-    }
-
-    class Hora{
-        public $hora;
-        public $minuto;
-    }
-
-    class FechaHora{
-        public $hora;
-        public $fecha;
-
-        /**
-         * Permite construir un nuevo objeto de la clase
-         */
-        function __construct()
-        {
-            $this->hora = new Hora;
-            $this->fecha = new Fecha;
-        }
+    class Libro{
+        public $titulo;
+        public $genero;
+        public $anio_pub;
+        public $autor;
     }
 
     /** Funciones */
+
 
       /**
      * Transforma un objeto en una secuencia JSON para
@@ -64,6 +44,8 @@
         return $objJSON;
     }
 
+
+
      /**
      * Transforma un objeto con datos (debe basarse en una clase) en una secuencia
      * JSON para ser enviada al JavaScript del lado del cliente.
@@ -80,7 +62,6 @@
     
         //Devolvemos el contenido del objeto $datosEnJSON mediante echo.
         echo($datosEnJSON);
-    
     }
 
     
@@ -92,5 +73,28 @@
         $datosRespuesta=TransformarEnJSON($objeto);
         MostrarJSON($datosRespuesta);
     }
+
+
+    /**
+     * Valida y limpia los datos que ingresan al servidor para evitar inyecciones SQL
+     *
+     * @param mixed $datos Datos a validar
+     * @return $datos Los datos validados 
+     */
+    function validarDatos($datos){
+        $datos = trim($datos);
+        $datos = stripslashes($datos);
+        $datos = htmlspecialchars($datos);
+        return $datos;
+    }
+
+
+    /**
+     * Establece una respuesta http 404 en caso de un intento de acceso mal formado
+     */
+    function accesoInadecuado(){
+        http_response_code(404);
+    }
+
 
  ?>
