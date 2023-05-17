@@ -12,10 +12,10 @@
         $basededatos->iniciarConexion("localhost:3306","libreria","VaqvPLDM","libreria");
 
         if ($basededatos->estado == "OK") {
-            $consulta = "SELECT titulo,genero,YEAR(fecha_pub) as anio_pub,nombre_autor,apellido_autor from libro where titulo like ?";
+            $consulta = "SELECT titulo,genero,YEAR(fecha_pub) as anio_pub,nombre_autor,apellido_autor from libro where titulo like ? or genero like ?";
             $sentencia = $basededatos->conexion->prepare($consulta);
             $termino = "%$dato%";
-            $sentencia->bind_param("s",$termino);
+            $sentencia->bind_param("ss",$termino,$termino);
             $sentencia->execute();
 
             $resultado = $sentencia->get_result();
@@ -41,9 +41,12 @@
         }
         else {
             $respuesta->estado=$basededatos->estado;
+            //CAMBIAR ESTO PARA PRODUCCIÓN!!!!!!!
             $respuesta->datos=$basededatos->mensaje;
         }
         
+        $basededatos->cerrarConexion();
+
         return $respuesta;        
     }
 
