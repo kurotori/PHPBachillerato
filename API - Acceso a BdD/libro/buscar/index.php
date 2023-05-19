@@ -5,19 +5,46 @@
     /** Funciones */
 
 
+    /**
+     * Permite buscar datos de los libros en la base de datos
+     * @param mixed $dato Dato a buscar
+     * 
+     * @return Respuesta Un objeto con los datos de los libros, o un detalle del error
+     */
     function buscarLibro($dato){
+        //Declaramos un objeto para conectarse a la base de datos
         $basededatos = new BaseDeDatos;
+
+        //Declaramos un objeto para la respuesta
         $respuesta = new Respuesta;
 
+        //Iniciamos la conexión al servidor de bases de datos
         $basededatos->iniciarConexion("localhost:3306","libreria","VaqvPLDM","libreria");
 
+        //Evaluamos el estado de la conexión a la BdD
         if ($basededatos->estado == "OK") {
-            $consulta = "SELECT titulo,genero,YEAR(fecha_pub) as anio_pub,nombre_autor,apellido_autor from libro where titulo like ? or genero like ?";
+
+            //Si la conexión es correcta, declaramos la consulta con parámetros, indicados por los símbolos de pregunta ----------\/
+            $consulta = "SELECT titulo,genero,YEAR(fecha_pub) as anio_pub,nombre_autor,apellido_autor from libro where titulo like ?";
+            
+            //Con el método 'prepare' de la conexión para declarar un objeto sentencia
             $sentencia = $basededatos->conexion->prepare($consulta);
+
+            //Declaramos variables para los términos de búsqueda
             $termino = "%$dato%";
-            $sentencia->bind_param("ss",$termino,$termino);
+
+            //Con el método bind_param del objeto sentencia, añadimos los términos a los parámetros de la consulta 
+            $sentencia->bind_param("s",$termino);
+            //  bind_param requiere un string con caracteres que indique los tipos de los datos a agregar a los parámetros
+            //      i - int, números enteros
+            //      d - double, número con decimales
+            //      s - string, textos, fechas, otros datos semejantes
+            //      b - blob, paquetes de datos, que se envían en forma fragmentaria, en paquetes
+
+            //Ejecutamos la sentencia con el método 'execute'
             $sentencia->execute();
 
+            //Declaramos un objeto 'resultado' para  
             $resultado = $sentencia->get_result();
 
             $respuesta->estado = "OK";
