@@ -97,4 +97,32 @@
     }
 
 
+    function esJson($dato){
+        json_decode($dato);
+        return (json_last_error() === JSON_ERROR_NONE);
+    }
+    
+    /**
+     * Permite validar los datos que vienen al sistema mediante POST
+     *
+     * @param [type] $dato
+     * @return void
+     */
+    function validarPost($dato){
+        if ( ! empty($dato) 
+            and 
+            isset($dato)
+        ) 
+        {
+            if (esJson($dato)) {
+                return $dato;
+            }
+            else{
+                return "ERROR";
+            }
+        }
+    }
+
+
+
  ?>
