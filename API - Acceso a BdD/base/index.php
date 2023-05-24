@@ -16,6 +16,12 @@
         public $autor;
     }
 
+    class Consulta{
+        public $dato;
+        //public $usuario;
+        //public $sesion;
+    }
+
     /** Funciones */
 
 
@@ -97,6 +103,7 @@
     }
 
 
+
     function esJson($dato){
         json_decode($dato);
         return (json_last_error() === JSON_ERROR_NONE);
@@ -109,17 +116,17 @@
      * @return void
      */
     function validarPost($dato){
-        if ( ! empty($dato) 
-            and 
-            isset($dato)
-        ) 
+        if ( ! empty($dato) and isset($dato) ) 
         {
             if (esJson($dato)) {
                 return $dato;
             }
             else{
-                return "ERROR";
+                accesoInadecuado();
             }
+        }
+        else{
+            accesoInadecuado();
         }
     }
 

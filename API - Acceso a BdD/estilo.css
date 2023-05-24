@@ -29,3 +29,7 @@ html,body{
     font-size: 75%;
     font-weight: bolder;
 }
+
+.resultado_libro:hover{
+    background-color:darkgrey ;
+}

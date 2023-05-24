@@ -1,5 +1,8 @@
 <?php 
-
+    //Para asegurarnos del correcto reporte de errores
+    mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ALL);
+    
+    
     /** Clases para el uso de bases de datos */
     class BaseDeDatos{
         public $conexion;
@@ -18,25 +21,32 @@
         */
         public function iniciarConexion($servidor, $usuario, $password, $bdd){
             
-            //Ejecutamos el comando mysqli para crear la conexión en el atributo conexion
-            $this->conexion = new mysqli($servidor, $usuario, $password, $bdd);
+            //Iniciamos un bloque try/catch para controlar el manejo de los errores
+            try {
+                //Ejecutamos el comando mysqli para crear la conexión en el atributo conexion
+                $this->conexion = new mysqli($servidor, $usuario, $password, $bdd);
 
-            //Establecemos el estado y el mensaje
-            $this->estado = "OK";
-            $this->mensaje = "Conexión Exitosa";
-    
-            //Chequeo de errores de conexión
-            if ($this->conexion->connect_error) {
+                //Establecemos el estado y el mensaje
+                $this->estado = "OK";
+                $this->mensaje = "Conexión Exitosa";
+            } catch (mysqli_sql_exception $excepcion) {
                 
                 //Si existe el atributo connect_error significa que hubo algún error de conexión
                 //Pasamos el estado a ERROR
                 $this->estado = "ERROR";
 
                 //Asignamos a mensaje el mensaje de error de connect_error
-                $this->mensaje = $this->conexion->connect_error;
+                $this->mensaje = $this->conexion->connect_error . " Excp: ".$excepcion->getM;
+            }
+
+            
+    
+            //Chequeo de errores de conexión
+            if ($this->conexion->connect_error) {
+                
 
                 //OPCIONAL: Añadimos el error al registro de errores del servidor
-                error_log($this->mensaje, 0);
+                //error_log($this->mensaje, 0);
 
                 //Terminamos el proceso con estatus 1, indicando al servidor que hubo un error
                 exit(1);

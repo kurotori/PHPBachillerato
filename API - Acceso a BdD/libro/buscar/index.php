@@ -1,6 +1,7 @@
 <?php 
     include_once "../../base/index.php";
     include_once "../../base/basededatos.php";
+    include_once "../../credenciales/bdd.php";
 
     /** Funciones */
 
@@ -19,7 +20,8 @@
         $respuesta = new Respuesta;
 
         //Iniciamos la conexión al servidor de bases de datos
-        $basededatos->iniciarConexion("localhost:3306","libreria","VaqvPLDM","libreria");
+        $credenciales = verCredenciales();
+        $basededatos->iniciarConexion($credenciales[0],$credenciales[1],$credenciales[2],$credenciales[3]);
 
         //Evaluamos el estado de la conexión a la BdD
         if ($basededatos->estado == "OK") {
