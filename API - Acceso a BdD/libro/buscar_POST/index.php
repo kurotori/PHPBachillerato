@@ -17,7 +17,7 @@
     $datosConsulta = new Consulta;
     $datosConsulta->dato = $objetoJson->dato;
 
-    $respuesta=buscarLibro("$objetoJson->dato");
+    $respuesta=buscarLibro("$datosConsulta->dato");
     respuestaJSON($respuesta);
     
     //echo("$objetoJson->dato");
