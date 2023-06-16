@@ -25,7 +25,7 @@
 
         //Evaluamos el estado de la conexión a la BdD
         if ($basededatos->estado == "OK") {
-
+            echo("OK");
             //Si la conexión es correcta, declaramos la consulta con parámetros, indicados por los símbolos de pregunta ----------\/
             $consulta = "SELECT titulo,genero,YEAR(fecha_pub) as anio_pub,nombre_autor,apellido_autor from libro where titulo like ?";
             
@@ -81,6 +81,7 @@
 
 
     /** Ejecución */
+    
     if ( ! empty($_GET['dato']) and ! is_null($_GET['dato'])) {
         $dato = validarDatos($_GET['dato']);
  

@@ -33,3 +33,7 @@ html,body{
 .resultado_libro:hover{
     background-color:darkgrey ;
 }
+
+.resultado_libro{
+    padding-left: 10px;
+}

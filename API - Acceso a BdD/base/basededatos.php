@@ -1,6 +1,6 @@
 <?php 
     //Para asegurarnos del correcto reporte de errores
-    mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ALL);
+    mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);//MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ALL);
     
     
     /** Clases para el uso de bases de datos */
@@ -36,21 +36,21 @@
                 $this->estado = "ERROR";
 
                 //Asignamos a mensaje el mensaje de error de connect_error
-                $this->mensaje = $this->conexion->connect_error . " Excp: ".$excepcion->getM;
+                $this->mensaje = $this->conexion->connect_error . " Excp: ".$excepcion->getMessage();
             }
 
             
     
             //Chequeo de errores de conexión
-            if ($this->conexion->connect_error) {
+           // if ($this->conexion->connect_error) {
                 
 
                 //OPCIONAL: Añadimos el error al registro de errores del servidor
                 //error_log($this->mensaje, 0);
 
                 //Terminamos el proceso con estatus 1, indicando al servidor que hubo un error
-                exit(1);
-            }
+                //exit(1);
+           // }
         }
 
         
