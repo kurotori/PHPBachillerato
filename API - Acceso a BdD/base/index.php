@@ -18,6 +18,7 @@
 
     class Consulta{
         public $dato;
+        public $modo;
         //public $usuario;
         //public $sesion;
     }
