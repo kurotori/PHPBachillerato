@@ -36,7 +36,7 @@
                 $this->estado = "ERROR";
 
                 //Asignamos a mensaje el mensaje de error de connect_error
-                $this->mensaje = $this->conexion->connect_error . " Excp: ".$excepcion->getMessage();
+                $this->mensaje = " Excp: ".$excepcion->getMessage();
             }
 
             

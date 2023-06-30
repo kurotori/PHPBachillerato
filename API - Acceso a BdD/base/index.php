@@ -116,8 +116,8 @@
      * @return void
      */
     function validarPost($dato){
-        if ( ! empty($dato) and isset($dato) ) 
-        {
+        if ( ! is_null($dato) and ! empty($dato) and isset($dato) ){ 
+        
             if (esJson($dato)) {
                 return $dato;
             }
