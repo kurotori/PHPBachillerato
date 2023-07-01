@@ -7,23 +7,29 @@
     //Recepción de los datos diréctamente del input
     $datos = file_get_contents('php://input');
 
-    //Validación de los datos
-    $datosValidados = validarPost($datos);
+    if ( ! empty($datos) ) {
+        
 
-    //Decodificación de los datos: el string json se converte en un objeto genérico
-    $objetoJson = json_decode("$datosValidados");
+        //Validación de los datos
+        $datosValidados = validarPost($datos);
 
-    //Creación de un objeto de clase Consulta para almacenar los datos específicos de la consulta
-    $datosConsulta = new Consulta;
-    $datosConsulta->dato = $objetoJson->dato;
+        //Decodificación de los datos: el string json se converte en un objeto genérico
+        $objetoJson = json_decode("$datosValidados");
 
-    $respuesta=buscarLibro("$datosConsulta->dato");
-    respuestaJSON($respuesta);
-    
-    //echo("$objetoJson->dato");
-    //print_r($datosConsulta);
-    //respuestaJSON($datosConsulta);
+        //Creación de un objeto de clase Consulta para almacenar los datos específicos de la consulta
+        $datosConsulta = new Consulta;
+        $datosConsulta->dato = $objetoJson->dato;
 
+        $respuesta=buscarLibro("$datosConsulta->dato");
+        respuestaJSON($respuesta);
+        
+        //echo("$objetoJson->dato");
+        //print_r($datosConsulta);
+        //respuestaJSON($datosConsulta);
+    }
+    else {
+        accesoInadecuado();
+    }
 
 
     function buscarLibro($dato){
@@ -40,17 +46,17 @@
 
         //Evaluamos el estado de la conexión a la BdD
         if ($basededatos->estado == "OK") {
-            $punto=1;
+            
             try {
                 //Si la conexión es correcta, declaramos la consulta con parámetros, indicados por los símbolos de pregunta ----------\/
                 $consulta = "SELECT titulo,genero,YEAR(fecha_pub) as anio_pub,nombre_autor,apellido_autor from libro where titulo like ?";
-                $punto=2;
+               
                 //Con el método 'prepare' de la conexión para declarar un objeto sentencia
                 $sentencia = $basededatos->conexion->prepare($consulta);
-                $punto=3;
+                
                 //Declaramos variables para los términos de búsqueda
                 $termino = "%$dato%";
-                $punto=4;
+                
                 //Con el método bind_param del objeto sentencia, añadimos los términos a los parámetros de la consulta 
                 $sentencia->bind_param('s',$termino);
                 //  bind_param requiere un string con caracteres que indique los tipos de los datos a agregar a los parámetros
@@ -58,10 +64,10 @@
                 //      d - double, número con decimales
                 //      s - string, textos, fechas, otros datos semejantes
                 //      b - blob, paquetes de datos, que se envían en forma fragmentaria, en paquetes
-                $punto=5;
+               
                 //Ejecutamos la sentencia con el método 'execute'
                 $sentencia->execute();
-                $punto=6;
+                
                 //Declaramos un objeto 'resultado' para  
                 $resultado = $sentencia->get_result();
 
@@ -85,7 +91,7 @@
                 }
             } catch (RuntimeException $excepcion){//mysqli_sql_exception $excepcion) {
                 $respuesta->estado="ERROR";
-                $respuesta->datos = "Punto $punto Excp: ".$excepcion->getMessage();
+                $respuesta->datos = "Excp: ".$excepcion->getMessage();
             }
             
         }
