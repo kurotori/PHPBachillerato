@@ -111,12 +111,13 @@
     }
     
     /**
-     * Permite validar los datos que vienen al sistema mediante POST
+     * Permite validar un solo dato
      *
      * @param [type] $dato
      * @return void
      */
-    function validarPost($dato){
+    function validarDato($dato){
+        $resultado = false;
         if ( ! empty($dato) and isset($dato) ) 
         {
             if (esJson($dato)) {
