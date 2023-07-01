@@ -9,21 +9,12 @@
         public $datos;
     }
 
-    class Usuario{
-        public $nombre;
+    class Libro{
+        public $titulo;
+        public $genero;
+        public $anio_pub;
+        public $autor;
     }
-
-    class UsuarioNuevo extends Usuario{
-        public $cl_publica;
-        public $hash_pass;
-    }
-
-    class UsuarioRegistrado extends Usuario{
-        public $cl_publica;
-        public $cl_privada;
-        public $hash_final;
-    }
-    
 
     class Consulta{
         public $dato;
