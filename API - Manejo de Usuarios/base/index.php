@@ -9,11 +9,22 @@
         public $datos;
     }
 
-    class Libro{
-        public $titulo;
-        public $genero;
-        public $anio_pub;
-        public $autor;
+    /**
+     * Clase para representar los datos de un usuario
+     */
+    class Usuario{
+        public $nombre;
+    }
+
+    class UsuarioNuevo extends Usuario{
+        public $cl_publica;
+        public $hash_pass;
+    }
+
+    class UsuarioRegistrado extends Usuario{
+        public $cl_publica;
+        public $cl_privada;
+        public $hash_final;
     }
 
     class Consulta{
@@ -23,8 +34,9 @@
         //public $sesion;
     }
 
-    /** Funciones */
 
+    
+    /** Funciones */
 
       /**
      * Transforma un objeto en una secuencia JSON para
@@ -95,6 +107,21 @@
         return $datos;
     }
 
+    /**
+     * Establece si una variable esta establecida, y tiene o no datos
+     *
+     * @param [type] $dato
+     * @return void
+     */
+    function tieneDatos($dato){
+        $resultado=false;
+        //Chequeamos si el dato evaluado es vacío, ha sido declarado, y su valor esta establecido
+        if ( ! empty($dato) and isset($dato) ) {
+            $resultado = true;
+        }
+
+        return $resultado;
+    }
 
     /**
      * Establece una respuesta http 404 en caso de un intento de acceso mal formado
@@ -104,26 +131,44 @@
     }
 
 
-
+    /**
+     * Determina si un String contiene código JSON válido. Si es así retorna TRUE
+     *
+     * @param [type] $dato
+     * @return void valor de validación del string 
+     */
     function esJson($dato){
         json_decode($dato);
-        return (json_last_error() === JSON_ERROR_NONE);
+        $algo = (json_last_error() === JSON_ERROR_NONE);
+        return $algo;
     }
-    
+
+
     /**
-     * Permite validar un solo dato
-     *
+     * Permite validar las entradas de datos. Usa las funciones 'prevalidarDatos' y 'esJson'
+     *  Si los datos son adecuados, se devuelve un objeto basado en el JSON del String.
+     *  De lo contrario se ejecuta la función 'accesoInadecuado' para bloquear el acceso al
+     *  sistema.
      * @param [type] $dato
      * @return void
      */
     function validarDato($dato){
-        $resultado = false;
-        if ( ! empty($dato) and isset($dato) ) 
-        {
-            if (esJson($dato)) {
-                return $dato;
+        //$dato=preValidarDatos($dato);
+
+        $dato = trim($dato);
+        $dato = stripslashes($dato);
+        $dato = htmlspecialchars($dato);
+
+        if ( tieneDatos($dato) ) {
+            echo("hay datos");
+            if ( esJson($dato) ) {
+                echo("es json");
+                //return $dato;
+                $objJson = json_decode("$dato");
+                return $objJson;
             }
             else{
+                echo("no es json");
                 accesoInadecuado();
             }
         }
