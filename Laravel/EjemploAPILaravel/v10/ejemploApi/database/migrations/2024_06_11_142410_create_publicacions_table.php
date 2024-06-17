@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo',50);
             $table->string('contenido',250);
-            $table->timestamp('fecha_pub');
+            $table->timestamp('fecha_pub')->useCurrent();
         });
     }
 
