@@ -11,10 +11,12 @@ formulario.addEventListener('submit',
             'contenido':formulario[1].value
         };
 
-        axios.post('http://localhost:8000/api/nueva', datos, {
+        axios.post(
+            'http://localhost:8000/api/nueva', 
+            datos, 
+            {
                 headers: {
-                    'Content-Type': 'application/json'
-                    
+                    'Content-Type': 'application/json'  
                 }
             })
             .then(function(response) {

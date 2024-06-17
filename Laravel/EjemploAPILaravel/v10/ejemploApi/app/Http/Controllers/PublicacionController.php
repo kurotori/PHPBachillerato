@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class PublicacionController extends Controller
 {
-    //
+    /**
+     * Permite obtener las últimas 10 publicaciones
+     *
+     * @return Una respuesta JSON con los datos de las publicaciones
+     */
     public function ver(){
 
         $publicaciones = DB::table('publicaciones')
@@ -27,6 +31,7 @@ class PublicacionController extends Controller
      * @return void
      */
     public function nueva(Request $solicitud){
+
         $datosValidados = $solicitud->validate([
             'titulo'=>'required|string|max:50',
             'contenido'=>'required|string|max:250'
@@ -34,6 +39,11 @@ class PublicacionController extends Controller
 
         $publicacion = Publicacion::create($datosValidados);
 
-        return response()->json(['mensaje'=>'Se ha agregado una publicacion', 'publicacion'=>$publicacion],201);
+        return response()->json(
+            [
+                'mensaje'=>'Se ha agregado una publicacion',
+                'publicacion'=>$publicacion
+            ],
+            201);
     }
 }

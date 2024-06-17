@@ -26,8 +26,9 @@ Route::get('publicaciones/',
     [PublicacionController::class,'ver']
 );
 
-
-Route::post('nueva/', [PublicacionController::class,'nueva'] );
+Route::post('nueva/',
+    [PublicacionController::class,'nueva']
+);
 
 Route::post('pruebas/', function (Request $request){
     return response()->json($request->all());
