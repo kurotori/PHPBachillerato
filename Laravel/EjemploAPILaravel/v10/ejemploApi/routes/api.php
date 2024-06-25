@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EchoController;
 use App\Http\Controllers\PublicacionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,10 @@ Route::post('nueva/',
 Route::post('pruebas/', function (Request $request){
     return response()->json($request->all());
 });
+
+Route::post('usuario/nuevo/',
+    [UserController::class,'crear']
+);
 
 
 
