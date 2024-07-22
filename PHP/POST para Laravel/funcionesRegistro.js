@@ -6,14 +6,13 @@ document.getElementById('formRegistro').addEventListener('submit',function(event
 
     // Iterar sobre los datos del formulario y mostrar los valores
     datosFormulario.forEach(function(value, key) {
-        console.log(key + ": " + value);
+        console.log(key + ": " + value);//BORRAR!!!!!
         datos[key] = value;
     });
 
     
     axios.post(
         'http://localhost:8000/api/registrar', 
-        //'http://localhost:8000/register',
         datos, 
         {
             headers: {
