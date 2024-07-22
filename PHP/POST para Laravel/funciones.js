@@ -1,13 +1,6 @@
 const formulario = document.getElementById('formPublicacion')
 const divPublicaciones = document.getElementById('publicaciones')
-const formularioRegistro = document.getElementById('formRegistro');
 
-
-const AlertaPubMsg = document.getElementById('alertaPubMsg');
-
-const alertaPub = new bootstrap.Modal(
-    document.getElementById("alertaPub")
-);
 
 formulario.addEventListener('submit',
     function (event) {
@@ -27,12 +20,10 @@ formulario.addEventListener('submit',
                 }
             })
             .then(function(response) {
-                //alert("Publicación creada correctamente")
+                alert("Publicación creada correctamente")
                 formulario[0].value = ""
                 formulario[1].value = ""
                 console.log('Datos enviados correctamente:', response.data);
-                AlertaPubMsg.innerText = "Publicación Creada"
-                alertaPub.toggle()
                 verPublicaciones()
                 //Recepción de la respuesta de la API
             })
@@ -104,39 +95,3 @@ async function verPublicaciones() {
         });
     })
 }
-
-
-
-formularioRegistro.addEventListener('submit',
-    function (event) {
-        event.preventDefault()
-        // Obtener los datos del formulario
-        const datos = {
-            'name':formularioRegistro[0].value,
-            'email':formularioRegistro[1].value,
-            'password':formularioRegistro[2].value
-        };
-
-        axios.post(
-            'http://localhost:8000/api/usuario/nuevo', 
-            datos, 
-            {
-                headers: {
-                    'Content-Type': 'application/json'  
-                }
-            })
-            .then(function(response) {
-                //alert("Publicación creada correctamente")
-                formulario[0].value = ""
-                formulario[1].value = ""
-                formulario[2].value = ""
-                console.log('Datos enviados correctamente:', response.data);
-                //Recepción de la respuesta de la API
-            })
-            .catch(function(error) {
-                console.error('Error al enviar los datos:', error);
-                // Manejo de los errores
-            });
-
-    }
-)
