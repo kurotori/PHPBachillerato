@@ -1,4 +1,20 @@
 
+function chequearToken() {
+    const token = localStorage.getItem('auth-token');
+
+    // if (!token) {
+    //     alert('No has iniciado sesión');
+    //     return;
+    // }
+
+    return token;
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+    token = chequearToken()
+    
+})
+
         document.getElementById('login-form').addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -24,7 +40,8 @@
                 datos, 
                 {
                     headers: {
-                        'Content-Type': 'application/json'  
+                        'Content-Type': 'application/json',
+
                     }
                 },
                // withCredentials: true,
