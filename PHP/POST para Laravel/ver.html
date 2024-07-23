@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+</head>
+<body>
+    <h1>Perfil</h1>
+    <button id="ver-perfil">Leer Datos del Perfil</button>
+    <button id="cerrar-sesion">Cerrar Sesión</button>
+    <pre id="profile-data"></pre>
+
+    <script>
+        function chequearToken() {
+            const token = localStorage.getItem('auth-token');
+
+            if (!token) {
+                alert('No has iniciado sesión');
+                return;
+            }
+
+            return token;
+        }
+
+        document.getElementById('ver-perfil').addEventListener('click', async () => {
+            const token = chequearToken()
+
+            const response = await fetch('http://localhost:8000/api/user', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                document.getElementById('profile-data').textContent = JSON.stringify(data, null, 2);
+            } else {
+                alert('Failed to fetch profile: ' + data.message);
+                console.log(data);
+            }
+        });
+
+        document.getElementById('cerrar-sesion').addEventListener('click', async () =>{
+            const token = chequearToken()
+
+            const response = await fetch('http://localhost:8000/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log(data);
+            } else {
+                alert('Failed to fetch profile: ' + data.message);
+                console.log(data);
+            }
+        })
+    </script>
+</body>
+</html>

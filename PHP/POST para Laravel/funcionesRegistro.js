@@ -1,14 +1,35 @@
 document.getElementById('formRegistro').addEventListener('submit',function(event){
     event.preventDefault()
-    //let datos = new FormData(this)
-    console.log(this)
-    var formData = new FormData(this);
+    
+    var datosFormulario = new FormData(this);
+    const datos = {}
 
     // Iterar sobre los datos del formulario y mostrar los valores
-    formData.forEach(function(value, key) {
+    datosFormulario.forEach(function(value, key) {
         console.log(key + ": " + value);
+        datos[key] = value;
     });
 
+    
+    axios.post(
+        'http://localhost:8000/api/registrar', 
+        //'http://localhost:8000/register',
+        datos, 
+        {
+            headers: {
+                'Content-Type': 'application/json'  
+            }
+        })
+        .then(function(response) {
+            alert("Publicación creada correctamente")
+            console.log('Datos enviados correctamente:', response.data);
+            //verPublicaciones()
+            //Recepción de la respuesta de la API
+        })
+        .catch(function(error) {
+            console.error('Error al enviar los datos:', error);
+            // Manejo de los errores
+        });
 })
 
 
