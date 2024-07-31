@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\PublicacionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +34,14 @@ Route::middleware(['auth:sanctum'])->post('/logout',
         return $request->user()->tokens()->delete();
     }
    // [AuthenticatedSessionController::class, 'destroy']
+);
+
+Route::post('/publicaciones/crear',
+    [PublicacionController::class,'crear']
+);
+
+
+Route::get('/publicaciones/ultimas/{n}',
+    [PublicacionController::class,'verUltimas']
 );
 

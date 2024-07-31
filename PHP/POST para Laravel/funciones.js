@@ -8,11 +8,12 @@ formulario.addEventListener('submit',
         // Obtener los datos del formulario
         const datos = {
             'titulo':formulario[0].value,
-            'contenido':formulario[1].value
+            'contenido':formulario[1].value,
+            'user_id':1
         };
 
         axios.post(
-            'http://localhost:8000/api/nueva', 
+            'http://localhost:8000/api/publicaciones/crear', 
             datos, 
             {
                 headers: {
@@ -82,15 +83,20 @@ async function verPublicaciones() {
     divPublicaciones.innerHTML="";
 
     axios.get(
-        'http://localhost:8000/api/publicaciones'
+        'http://localhost:8000/api/publicaciones/ultimas/10'
     )
     .then(function (response) {
-        response.data.forEach(element => {
+        response.data.publicaciones.forEach(element => {
+            console.log(element)
             const h3Titulo = document.createElement('h3')
             h3Titulo.innerText = element.id + ") " + element.titulo
+            const h4Autor = document.createElement('h4')
+            h4Autor.innerText = "Creado por " + element.user_id
+            
             const pContenido = document.createElement('p')
             pContenido.innerText = element.contenido
             divPublicaciones.appendChild(h3Titulo)
+            divPublicaciones.appendChild(h4Autor)
             divPublicaciones.appendChild(pContenido)
         });
     })
